@@ -1,0 +1,54 @@
+# all settings added to __raw, will be kept as it added
+__raw:
+  site_url: https://xkcd.com/
+
+
+page:
+  # if not _locator supplied will reuse parent soup
+  # page has no parent soup, so use default root soup
+  title: head>title
+
+
+top_container:
+  # we set a _locator here, all sub-nodes will select within top_container
+  _locator: div#topContainer
+  top_left:
+    # _index:~ means None, so we can use whole list
+    _index: ~
+    _locator: div#topLeft>ul>li>a
+    # if non-reserved key set to ~, means use parent soup, and use its text
+    # this is a convenient way to get text
+    menu_text: ~
+    menu_url:
+      # when other attributes exist, no need to add _locator to use its parent soup
+      _attr: href
+      # if we need some extra work on _attr, goes with two ways
+      # 1. `_attr_refine: true` will auto generate => _refine_menu_url_href
+      # the rule of auto-generator is _refine_<key_name>_<attr_value>
+      # 2. `_attr_refine: _a_valid_method_name`
+      _attr_refine: true
+  top_right:
+    _locator: div#topRight
+    masthead:
+      # two way to get more than one attributes on a element
+      # e.g. image.src/.alt
+      # way1: if all src/alt need refine, this will treat attrs as list
+      image_1:
+        _attr:
+          - src
+          - alt
+        _attr_refine: true
+        _locator: &LOGO_IMG span>a>img
+      # way2: not all src/alt need refine, this will treat attrs as dict
+      image_2:
+        _locator: *LOGO_IMG
+        src:
+          _attr: src
+          # only set _attr_refine to src
+          # 1. _attr_refine: true => _refine_src_src
+          # 2. _attr_refine: _refine_image_1_src to reuse exists method
+          _attr_refine: _refine_image_1_src
+        alt:
+          _attr: alt
+
+      slogan: span#slogan

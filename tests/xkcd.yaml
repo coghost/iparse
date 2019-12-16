@@ -1,0 +1,100 @@
+# all settings added to __raw, will be kept as it added
+__raw:
+  site_url: https://xkcd.com/
+
+__ENURL: &ENRICH_URL
+  _attr: href
+  _attr_refine: enrich_url
+
+__EN_URL_TXT: &ENRICH_URL_TXT
+  href:
+    <<: *ENRICH_URL
+  text: ~
+
+page:
+  title: head>title
+  footnote: div#footnote
+  license: div#licenseText
+  license1:
+    _locator: div#licenseText
+    _joiner: ' '
+    _striped: true
+
+
+top_container:
+  _locator: div#topContainer
+  top_left:
+    _index: ~
+    _locator: div#topLeft>ul>li>a
+    <<: *ENRICH_URL_TXT
+  top_right:
+    _locator: div#topRight
+    masthead:
+      _locator: div#masthead
+      image:
+        _locator: span>a>img
+        src:
+          _attr: src
+          _attr_refine: _refine_image_1_src
+        alt:
+          _attr: alt
+      slogan: span#slogan
+    news:
+      _locator: div#htNews
+      how_to:
+        _attr: href
+        _locator: a[href$='how-to/']
+      links:
+        _index:
+          - 1
+        _locator: a
+        <<: *ENRICH_URL_TXT
+
+
+middle_container:
+  _locator: div#middleContainer
+  ctitle: div#ctitle
+  comic_nav:
+    _locator: ul.comicNav
+    _index: 0
+    nav:
+      _index: ~
+      _locator: li>a
+      <<: *ENRICH_URL_TXT
+      rel:
+        _attr: rel
+      accesskey:
+        _attr: accesskey
+  comic:
+    _locator: div#comic>img
+    _attr:
+      - src
+      - title
+      - alt
+  transcript: div#transcript
+
+
+bottom:
+  _locator: div#bottom
+  comic_map:
+    _locator: map[name='comicmap']>area
+    _index: ~
+    alt:
+      _attr: alt
+    coords:
+      _attr: coords
+    href:
+      <<: *ENRICH_URL
+  comic:
+    href:
+      <<: *ENRICH_URL
+    _locator: a
+  feed:
+    _locator: div>a[href^='/']
+    _index:
+      - 1
+    <<: *ENRICH_URL_TXT
+  comic_links:
+    _locator: div#comicLinks>a
+    _index: ~
+    <<: *ENRICH_URL_TXT
