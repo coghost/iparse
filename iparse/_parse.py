@@ -5,8 +5,7 @@ __description__ = '''
 
 import dataclasses
 import json
-import os
-from pathlib import PurePath
+from pathlib import Path
 from urllib.parse import urlparse, urljoin
 
 import yaml
@@ -44,20 +43,25 @@ class RsvWords:
     prefix_refine = '_refine'
 
 
-def yaml_loader(file_pth):
+def yaml_loader(file_pth, raw_data=False):
     """
     load yaml to dict
     Args:
         file_pth (str):
+        raw_data (bool): if raw_data, will treat file_pth as yaml content
 
     Returns:
         yaml file as dict
     """
     try:
-        with open(file_pth, 'rb') as f:
-            cfg = yaml.load(f, Loader=yaml.FullLoader)
+        if raw_data:
+            return yaml.load(file_pth, Loader=yaml.FullLoader)
 
-        return cfg
+        file_pth = Path(file_pth)
+        if not file_pth.exists():
+            raise IParserException('[NON-EXISTS]:{}'.format(file_pth))
+        with open(file_pth, 'rb') as f:
+            return yaml.load(f, Loader=yaml.FullLoader)
     except Exception as e:
         return
 
@@ -92,7 +96,7 @@ class IParser(object):
         kwargs['basic_yaml'] = kwargs.get('basic_yaml', DIR / 'base.yaml')
     """
 
-    def __init__(self, file_name, *args, **kwargs):
+    def __init__(self, file_name='', *args, **kwargs):
         """
 
         Args:
@@ -101,6 +105,7 @@ class IParser(object):
             **kwargs (): file_name
         """
         self.file_name = file_name
+        self.raw_data = kwargs.get('raw_data', '')
         self.mapper = {}
         self.soup = None
         self.site_name = titlecase(self.__class__.__name__.replace('Parser', ''))
@@ -108,7 +113,7 @@ class IParser(object):
 
         self.log_level = kwargs.get('log_level', 10)
         # convert startup_dir to PurePath
-        self.startup_dir = PurePath(str(kwargs.get('startup_dir', '/tmp')))
+        self.startup_dir = Path(str(kwargs.get('startup_dir', '/tmp')))
         # a basic yaml is shared configs among all yaml files
         self.basic_yaml = kwargs.get('basic_yaml', '')
         # site yaml file is where all site's selector behold
@@ -173,20 +178,22 @@ class IParser(object):
                 self.mapper[_key] = _custom[_key]
 
     def _load_yaml_config(self, file_name):
-        _site_startup_yaml = str(self.startup_dir / '{}.yaml'.format(file_name))
-        if os.path.exists(_site_startup_yaml):
+        _site_startup_yaml = self.startup_dir / '{}.yaml'.format(file_name)
+        if _site_startup_yaml.exists():
             return yaml_loader(_site_startup_yaml)
         raise IParserException('site startup yaml ({}) not exists'.format(_site_startup_yaml))
 
     def init_soup(self):
         """ fail over with 'html.parser' """
-        with open(self.file_name, 'rb') as fp:
-            raw_data = fp.read()
-            try:
-                self.soup = BeautifulSoup(raw_data, self.features, from_encoding=self.encoding)
-            except bs4.FeatureNotFound:
-                self.features = 'html.parser'
-                self.soup = BeautifulSoup(raw_data, self.features, from_encoding=self.encoding)
+        if not self.raw_data:
+            with open(self.file_name, 'rb') as fp:
+                self.raw_data = fp.read()
+
+        try:
+            self.soup = BeautifulSoup(self.raw_data, self.features, from_encoding=self.encoding)
+        except bs4.FeatureNotFound:
+            self.features = 'html.parser'
+            self.soup = BeautifulSoup(self.raw_data, self.features, from_encoding=self.encoding)
 
     @property
     def data(self):
@@ -200,21 +207,27 @@ class IParser(object):
     def data_as_yaml(self):
         return yaml_dump(self._data)
 
+    @staticmethod
+    def shift(dat):
+        if isinstance(dat, dict):
+            return yaml_dump(dat)
+        return yaml_loader(dat, raw_data=True)
+
     def do_parse(self):
         for dom_key, dom_config in self.mapper.items():
             if dom_key.startswith('__'):
                 continue
 
             if dom_key in self.reserved_yaml_keys:
-                zlog.error('found reserved keys ({})'.format(dom_key))
+                zlog.error('[RESERVED-KEYS] ({})'.format(dom_key))
                 continue
 
             if not isinstance(dom_config, dict):
-                zlog.error('found plain type {}:{}, please move inside page'.format(dom_key, dom_config))
+                zlog.error('[PLAIN-TYPE] {}:{}, please move inside page'.format(dom_key, dom_config))
                 continue
 
             if all([self.is_test_mode, self.test_keys, dom_key not in self.test_keys]):
-                zlog.info('skipped keys ({})'.format(dom_key))
+                zlog.debug('[SKIPPED-KEYS] ({})'.format(dom_key))
                 continue
 
             self._parse_dom(dom_key, dom_config, self.soup, self._data)
@@ -235,6 +248,7 @@ class IParser(object):
         two end conditions:
             1. config is str
             2. no child in config dom nodes
+            3. nodes not exist
 
         Args:
             key (str):
@@ -247,6 +261,11 @@ class IParser(object):
             return
 
         nodes = self._get_node_elems(key, config, nodes)
+        # nodes not exists
+        if not nodes:
+            zlog.debug("[NON-NODES] ('{}': {})".format(key, config))
+            return
+
         if isinstance(nodes, list):
             dat.setdefault(key, [])
             for node in nodes:
@@ -334,7 +353,7 @@ class IParser(object):
 
         # gn3.2 in case if you mistakenly add `_locator: ''` or things like this
         if not _locator:
-            zlog.warning('please use `_locator: ~` or `remove _locator` instead of ({},{},{})'.format(
+            zlog.warning('[TYPO] please use `_locator: ~` or `remove _locator` instead of ({},{},{})'.format(
                 key, config, _locator
             ))
             return node
@@ -383,7 +402,7 @@ class IParser(object):
         if self.is_test_mode:
             raise IParserException('error type of {} index({})'.format(config, index))
         else:
-            zlog.exception('error type of {} index({})'.format(config, index))
+            zlog.exception('[ERROR-TYPE] type of {} index({})'.format(config, index))
         return elems
 
     def _get_nodes_attrs(self, key, config, node=None, **kwargs):
@@ -408,12 +427,12 @@ class IParser(object):
 
         # in case got node list
         if isinstance(node, list):
-            zlog.warning('type of node is list: {}{}'.format(key, config))
+            zlog.warning('[MULTIPLE-NODE]type of node is list: {}{}'.format(key, config))
             return ''
 
         elems = self._get_node_elems(key, config, node)
-        if self.is_test_mode and not elems:
-            zlog.debug('[WARN]: {}/{} find nothing'.format(key, config))
+        if not elems:
+            zlog.debug('[NON-ELEMS]: {}/{} find nothing'.format(key, config))
             return ''
 
         if not isinstance(elems, list):

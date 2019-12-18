@@ -13,7 +13,7 @@ setup(
     author='lihe',
     author_email='imanux@sina.com',
     url='https://github.com/coghost/iparse',
-    description='encapsulation of profig and logzero',
+    description='parser of bs4 with yaml config support',
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     license='GPL',
