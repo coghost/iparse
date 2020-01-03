@@ -122,7 +122,7 @@ class IParser(object):
         self.is_test_mode = kwargs.get('is_test_mode', False)
         self.test_keys = kwargs.get('test_keys', [])
         # bs4 basic configs
-        self.encoding = kwargs.get('encoding', 'utf8')
+        self.encoding = kwargs.get('encoding', '')
         self.features = kwargs.get('features', 'lxml')
         self.reserved_yaml_keys = kwargs.get('reserved_yaml_keys', [])
 
@@ -183,17 +183,31 @@ class IParser(object):
             return yaml_loader(_site_startup_yaml)
         raise IParserException('site startup yaml ({}) not exists'.format(_site_startup_yaml))
 
-    def init_soup(self):
-        """ fail over with 'html.parser' """
+    def init_soup(self, raw_data=''):
+        """
+        init soup for parser, if raw_data supplied, will refresh self.soup
+
+            - fail over with 'html.parser'
+
+        Args:
+            raw_data (): if you want refresh soup, can call this method with raw_data
+        """
+        if raw_data:
+            self.raw_data = raw_data
         if not self.raw_data:
             with open(self.file_name, 'rb') as fp:
                 self.raw_data = fp.read()
 
+        params = dict(
+            features=self.features,
+        )
+        if self.encoding:
+            params['from_encoding'] = self.encoding
         try:
-            self.soup = BeautifulSoup(self.raw_data, self.features, from_encoding=self.encoding)
+            self.soup = BeautifulSoup(self.raw_data, **params)
         except bs4.FeatureNotFound:
-            self.features = 'html.parser'
-            self.soup = BeautifulSoup(self.raw_data, self.features, from_encoding=self.encoding)
+            params['features'] = 'html.parser'
+            self.soup = BeautifulSoup(self.raw_data, **params)
 
     @property
     def data(self):
@@ -231,6 +245,7 @@ class IParser(object):
                 continue
 
             self._parse_dom(dom_key, dom_config, self.soup, self._data)
+        logzero.loglevel(10)
 
     """ operation on DOMs """
 
