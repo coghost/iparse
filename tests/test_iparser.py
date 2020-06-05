@@ -7,7 +7,7 @@ https://xkcd.com/353/
 from pathlib import PurePath
 from iparse._parse import IParser, RsvWords
 
-HOME_DIR = PurePath(PurePath(__file__).parents[1])
+HOME_DIR = PurePath(__file__).parents[1]
 
 
 class XkcdParser(IParser):

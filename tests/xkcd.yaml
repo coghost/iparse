@@ -20,7 +20,6 @@ page:
     _joiner: ' '
     _striped: true
 
-
 top_container:
   _locator: div#topContainer
   top_left:
@@ -50,7 +49,6 @@ top_container:
         _locator: a
         <<: *ENRICH_URL_TXT
 
-
 middle_container:
   _locator: div#middleContainer
   ctitle: div#ctitle
@@ -72,7 +70,6 @@ middle_container:
       - title
       - alt
   transcript: div#transcript
-
 
 bottom:
   _locator: div#bottom

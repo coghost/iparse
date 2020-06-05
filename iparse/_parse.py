@@ -7,6 +7,7 @@ import dataclasses
 import json
 from pathlib import Path
 from urllib.parse import urlparse, urljoin
+import string
 
 import yaml
 import logzero
@@ -355,6 +356,9 @@ class IParser(object):
         if config is None:
             return node
 
+        if not config:
+            raise Exception(f"[Err] _locator({key}:{config})'s value can not be empty")
+
         # gn2. simple str, select and return
         if isinstance(config, str):
             elems = node.select(config)
@@ -583,6 +587,8 @@ class IParser(object):
             if isinstance(_attrs, str):
                 _fmt = '{}_{}_{}'
             _attr_refine = _fmt.format(RsvWords.prefix_refine, key, _attrs)
+            # only keep characters allowed by python function names
+            _attr_refine = self.keep_allowed_chars(_attr_refine, replace_with='')
         raw = getattr(self, _attr_refine)(raw)
         return raw
 
@@ -609,6 +615,12 @@ class IParser(object):
             return [x for x in info.split(sep)]
         info = [x for x in info.split(sep) if x.strip()]
         return info[index].strip() if info else ''
+
+    @staticmethod
+    def keep_allowed_chars(src, custom='_', replace_with=''):
+        chars_allowed = string.ascii_letters + string.digits + custom
+        dst = ''.join([x if x in chars_allowed else replace_with for x in src])
+        return dst
 
     @staticmethod
     def char_to_num(src, chars_allowed='0123456789', custom=''):
