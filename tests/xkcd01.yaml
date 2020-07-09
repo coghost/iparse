@@ -1,0 +1,6 @@
+page:
+  title: head>title
+  footnote: div#footnote
+  license:
+    _locator: div#licenseText
+    _striped: true

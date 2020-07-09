@@ -2,12 +2,15 @@
 __raw:
   site_url: https://xkcd.com/
 
-
 page:
   # if not _locator supplied will reuse parent soup
   # page has no parent soup, so use default root soup
   title: head>title
-
+  footnote: div#footnote
+  license:
+    _locator: div#licenseText
+    # strip blank with true, but also can specified a str
+    _striped: true
 
 top_container:
   # we set a _locator here, all sub-nodes will select within top_container
