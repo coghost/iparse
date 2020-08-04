@@ -1,0 +1,36 @@
+__raw:
+  site_url: https://jobs.zhaopin.com/
+
+jobs:
+  number: number
+  title: jobName
+  url: positionURL
+  company:
+    name: company.name
+    type: company.type.name
+    size:
+      _locator: company.size.name
+      _striped: '人'
+    url: company.url
+  city:
+    _locator: city.items
+    _index: 0
+    _attr: name
+  job_type:
+    _locator: jobType.items
+    _index: 0
+    _attr: name
+  welfare: welfare
+  experience: workingExp.name
+  listing_date: updateDate
+  salary:
+    _locator: salary
+  education: eduLevel
+  industry:
+    _locator: industry
+    _attr_refine: true
+  external_id: uuid
+  staff:
+    hr_job: staff.hrJob
+    name: staff.staffName
+  vip_level: vipLevel
