@@ -18,6 +18,7 @@ from bs4 import BeautifulSoup
 
 __all__ = [
     'IParser',
+    'IJsonParser',
     'IParserException',
     'RsvWords',
     'yaml_dump',
@@ -126,6 +127,7 @@ class IParser(object):
         self.encoding = kwargs.get('encoding', '')
         self.features = kwargs.get('features', 'lxml')
         self.reserved_yaml_keys = kwargs.get('reserved_yaml_keys', [])
+        self.elems_default_index = kwargs.get('elems_default_index', 0)
 
         # where our parsed data behold
         self._data = {}
@@ -246,7 +248,6 @@ class IParser(object):
                 continue
 
             self._parse_dom(dom_key, dom_config, self.soup, self._data)
-        logzero.loglevel(10)
 
     """ operation on DOMs """
 
@@ -349,6 +350,12 @@ class IParser(object):
             else:
                 zlog.exception(e)
 
+    def select_soup_node_elems(self, node, key, multiple=True):
+        elems = getattr(node, 'select')(key)
+        if multiple:
+            return elems
+        return elems[0] if elems else elems
+
     def get_node_elems(self, key, config, node=None, **kwargs):
         node = node or self.soup
 
@@ -361,8 +368,8 @@ class IParser(object):
 
         # gn2. simple str, select and return
         if isinstance(config, str):
-            elems = node.select(config)
-            return elems[0] if elems else elems
+            elems = self.select_soup_node_elems(node, config, multiple=False)
+            return elems
 
         # gn3. config is dict
         # gn3.1 _locator is None, use current node
@@ -377,7 +384,7 @@ class IParser(object):
             ))
             return node
 
-        elems = node.select(_locator)
+        elems = self.select_soup_node_elems(node, _locator)
         # gn4. with _locator_extract
         _locator_extract = config.get(RsvWords.locator_extract)
         elems = self.__extract_elems(key, _locator_extract, elems)
@@ -402,7 +409,7 @@ class IParser(object):
 
     def __filter_specified_elems(self, elems, config):
         # index: None = all, int = only one, list = range
-        index = config.get(RsvWords.index, 0)
+        index = config.get(RsvWords.index, self.elems_default_index)
         # gn5.1 `index: ~`
         if index is None:
             return elems
@@ -522,7 +529,7 @@ class IParser(object):
             raw = self.get_striped_text(elem, _striped)
 
         # ga4. refine attribute
-        return self.__refine_attr(key, config, _attrs, raw)
+        return self.__refine_attr__(key, config, _attrs, raw)
 
     def _get_prime_attr(self, elem, attr):
         # ga3.1.1 attr is list
@@ -534,8 +541,8 @@ class IParser(object):
         # ga3.1.2 attr is str
         return elem.get(attr)
 
-    def get_striped_text(self, elem, _striped=False):
-        raw = elem.text
+    def get_striped_text(self, elem, _striped=False, keep_original=False):
+        raw = elem if keep_original else elem.text
 
         if _striped is True:
             return raw.strip()
@@ -546,7 +553,7 @@ class IParser(object):
 
         return raw
 
-    def __refine_attr(self, key, config, _attrs, raw):
+    def __refine_attr__(self, key, config, _attrs, raw):
         """
         ga4.1 non refine
         ga4.2 if attr_refine is str, just use it
@@ -663,3 +670,85 @@ class IParser(object):
 
     def enrich_k_int(self, info):
         return int(self.enrich_dot_k(info, custom=''))
+
+
+class IJsonParser(IParser):
+    def __init__(self, file_name='', *args, **kwargs):
+        kwargs['elems_default_index'] = kwargs.get('elems_default_index', None)
+        self.cascade_sep = kwargs.pop('cascade_sep', '.')
+        super().__init__(file_name, *args, **kwargs)
+
+    def init_soup(self, raw_data=''):
+        """ a valid json should be a dict or list """
+        if raw_data:
+            self.raw_data = raw_data
+        if not self.raw_data:
+            with open(self.file_name, 'rb') as fp:
+                self.raw_data = fp.read()
+
+        self.soup = json.loads(self.raw_data)
+        # T1: dict
+        if isinstance(self.soup, dict):
+            return
+
+        if not isinstance(self.soup, list):
+            raise Exception(f'Error loading SERP: {self.file_name}')
+        # T2: list
+        self.soup = [x for x in self.soup if x]
+
+    def select_soup_node_elems(self, root, locator, multiple=True):
+        """
+        in case some file's keys goes with `self.cascade_sep`, so we need go through the whole locator
+        e.g.:
+            root = A
+            locator = `features./job_category.values`
+
+        steps of find locator's elem:
+            1. A.get(features./job_category.values)
+            2. A.get(features).get(/job_category.values)
+            3. A.get(features).get(/job_category).get(values)
+            4. ...
+        """
+        # locator exists, that's it
+        if locator in root:
+            return root.get(locator, '')
+
+        # e.g.: `features./job_category.values`
+        cascade_keys = locator.split(self.cascade_sep)
+        elem_container = root
+        for i in range(len(cascade_keys)):
+            head, tail = cascade_keys[i], self.cascade_sep.join(cascade_keys[i + 1:])
+            elem_container = elem_container.get(head, {})
+            elem = elem_container.get(tail)
+            if elem:
+                return elem
+
+    def _get_elem_attrs(self, elem, key, config):
+        if not elem:
+            return ''
+
+        if not isinstance(config, dict):
+            return elem
+
+        _attrs = config.get(RsvWords.attr)
+        _striped = config.get(RsvWords.striped, False)
+
+        if _attrs:
+            raw = self._get_prime_attr(elem, _attrs)
+        else:
+            raw = self.get_striped_text(elem, _striped, keep_original=True)
+
+        return self.__refine_attr__(key, config, '', raw)
+
+    def __refine_attr__(self, key, config, _attrs, raw):
+        _attr_refine = config.get(RsvWords.attr_refine)
+        if not _attr_refine:
+            return raw
+
+        if _attr_refine is True:
+            _fmt = '{}_{}'
+            _attr_refine = _fmt.format(RsvWords.prefix_refine, key)
+            # only keep characters allowed by python function names
+            _attr_refine = self.keep_allowed_chars(_attr_refine, replace_with='')
+
+        return getattr(self, _attr_refine)(raw)
