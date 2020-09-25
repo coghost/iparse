@@ -249,6 +249,9 @@ class IParser(object):
 
             self._parse_dom(dom_key, dom_config, self.soup, self._data)
 
+        # reset logzero level to 10
+        logzero.loglevel(10)
+
     """ operation on DOMs """
 
     def dom_with_sub_nodes(self, config):
