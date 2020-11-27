@@ -33,6 +33,7 @@ class IParserException(Exception):
 @dataclasses.dataclass
 class RsvWords:
     """ all reserved words """
+
     attr: str = '_attr'
     attr_refine: str = '_attr_refine'
     children: str = '_children'
@@ -382,9 +383,11 @@ class IParser(object):
 
         # gn3.2 in case if you mistakenly add `_locator: ''` or things like this
         if not _locator:
-            zlog.warning('[TYPO] please use `_locator: ~` or `remove _locator` instead of ({},{},{})'.format(
-                key, config, _locator
-            ))
+            zlog.warning(
+                '[TYPO] please use `_locator: ~` or `remove _locator` instead of ({},{},{})'.format(
+                    key, config, _locator
+                )
+            )
             return node
 
         elems = self.select_soup_node_elems(node, _locator)
@@ -423,9 +426,9 @@ class IParser(object):
         # gn5.3 `index: <list>`
         if isinstance(index, list):
             if len(index) == 1:
-                return elems[index[0]:]
+                return elems[index[0] :]
             else:
-                return elems[index[0]:index[-1]]
+                return elems[index[0] : index[-1]]
 
         # gn5.4 `index: non-previous value`
         if self.is_test_mode:
@@ -435,9 +438,7 @@ class IParser(object):
         return elems
 
     def _get_nodes_attrs(self, key, config, node=None, **kwargs):
-        return [
-            self._get_node_attrs(key, config, _node) for _node in node
-        ]
+        return [self._get_node_attrs(key, config, _node) for _node in node]
 
     def _get_node_attrs(self, key, config, node=None, **kwargs):
         """
@@ -467,12 +468,10 @@ class IParser(object):
         if not isinstance(elems, list):
             return self._get_elem_attrs(elems, key, config)
 
-        return [
-            self._get_elem_attrs(elem, key, config) for elem in elems
-        ]
+        return [self._get_elem_attrs(elem, key, config) for elem in elems]
 
     def _get_elem_attrs(self, elem, key, config):
-        """ get elem's attributes
+        """get elem's attributes
 
         e.g. example for all kinds of key:config
 
@@ -537,9 +536,7 @@ class IParser(object):
     def _get_prime_attr(self, elem, attr):
         # ga3.1.1 attr is list
         if isinstance(attr, list):
-            return {
-                _attr: elem.get(_attr, '') for _attr in attr
-            }
+            return {_attr: elem.get(_attr, '') for _attr in attr}
 
         # ga3.1.2 attr is str
         return elem.get(attr)
@@ -587,9 +584,7 @@ class IParser(object):
         if isinstance(raw, dict):
             if _attr_refine is True:
                 _attr_refine = '{}_{}'.format(RsvWords.prefix_refine, key)
-            return {
-                k: getattr(self, '{}_{}'.format(_attr_refine, k))(v) for k, v in raw.items()
-            }
+            return {k: getattr(self, '{}_{}'.format(_attr_refine, k))(v) for k, v in raw.items()}
 
         # ga4.3 raw is normal str
         if _attr_refine is True:
@@ -634,7 +629,7 @@ class IParser(object):
 
     @staticmethod
     def char_to_num(src, chars_allowed='0123456789', custom=''):
-        """ simple number only filter
+        """simple number only filter
 
         Args:
             src (str): orig string
@@ -720,8 +715,10 @@ class IJsonParser(IParser):
         cascade_keys = locator.split(self.cascade_sep)
         elem_container = root
         for i in range(len(cascade_keys)):
-            head, tail = cascade_keys[i], self.cascade_sep.join(cascade_keys[i + 1:])
+            head, tail = cascade_keys[i], self.cascade_sep.join(cascade_keys[i + 1 :])
             elem_container = elem_container.get(head, {})
+            if not isinstance(elem_container, dict):
+                return ''
             elem = elem_container.get(tail)
             if elem:
                 return elem
