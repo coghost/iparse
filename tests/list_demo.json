@@ -1,0 +1,541 @@
+[
+  {
+    "number": "CC581421280J00263439811",
+    "jobName": "机械工艺工程师",
+    "company": {
+      "name": "辽宁福鞍燃气轮机有限公司",
+      "number": "CZ581421280",
+      "type": {
+        "name": "上市公司"
+      },
+      "size": {
+        "name": "100-299人"
+      },
+      "url": "https://company.zhaopin.com/CZ581421280.htm"
+    },
+    "city": {
+      "items": [
+        {
+          "name": "鞍山",
+          "code": "601"
+        }
+      ],
+      "display": "鞍山"
+    },
+    "updateDate": "2020-08-03 00:51:45",
+    "salary": "6K-12K",
+    "distance": 0,
+    "eduLevel": {
+      "name": "本科"
+    },
+    "jobType": {
+      "items": [
+        {
+          "name": "机械设计/制造/维修"
+        }
+      ]
+    },
+    "feedbackRation": 0.98,
+    "workingExp": {
+      "name": "5-10年"
+    },
+    "industry": "129900,300000",
+    "emplType": "全职",
+    "applyType": "1",
+    "saleType": false,
+    "positionURL": "https://jobs.zhaopin.com/CC581421280J00263439811.htm",
+    "companyLogo": "http://img09.zhaopin.com/2012/other/mobile/mi/companyLogo/03/default.png",
+    "tags": [],
+    "expandCount": 0,
+    "score": "279",
+    "vipLevel": 1002,
+    "positionLabel": "{\"chatWindow\":null,\"refreshLevel\":2,\"skillLabel\":[{\"state\":0,\"value\":\"UG\"},{\"state\":0,\"value\":\"CAD\"},{\"state\":0,\"value\":\"精通机加工艺\"},{\"state\":0,\"value\":\"数控编程\"},{\"state\":0,\"value\":\"燃机工艺\"},{\"state\":0,\"value\":\"航发工艺\"}]}",
+    "bestEmployerLabel": [],
+    "welfare": [
+      "五险一金",
+      "餐补",
+      "健身俱乐部",
+      "补充医疗保险",
+      "周末双休"
+    ],
+    "businessArea": "",
+    "futureJob": false,
+    "futureJobUrl": "",
+    "tagIntHighend": 0,
+    "rootOrgId": 58142128,
+    "staffId": 1063199390,
+    "isChatWindow": 1,
+    "staff": {
+      "avatar": "https://storage-public.zhaopin.cn/user/avatar/fc57f42c761d42c180f345b40d1e3750/upload_b4facdd901f9640205fa149a6b020a48.jpg",
+      "department": "",
+      "hrJob": "人力专员",
+      "hrOnlineIocState": 0,
+      "hrOnlineState": "今日活跃",
+      "hrResumeOperationState": "",
+      "id": 1063199390,
+      "nickName": "",
+      "passportName": "***",
+      "staffName": "HR",
+      "state": 0
+    },
+    "batchDeliveryType": 1,
+    "index": 0,
+    "gWeight": "",
+    "uuid": "CC581421280J00263439811-1596451792253",
+    "selected": false,
+    "applied": false,
+    "collected": false,
+    "isShow": false,
+    "timeState": "最新",
+    "rate": "98%"
+  },
+  {
+    "number": "CC361343813J00257246209",
+    "jobName": "外贸业务员",
+    "company": {
+      "name": "辽宁超鹏服饰有限公司",
+      "number": "CZ361343810",
+      "type": {
+        "name": "民营"
+      },
+      "size": {
+        "name": "100-299人"
+      },
+      "url": "http://special.zhaopin.com/pagepublish/36134381/index.html"
+    },
+    "city": {
+      "items": [
+        {
+          "name": "鞍山",
+          "code": "601"
+        }
+      ],
+      "display": "鞍山"
+    },
+    "updateDate": "2020-08-03 00:51:39",
+    "salary": "3K-6K",
+    "distance": 0,
+    "eduLevel": {
+      "name": "本科"
+    },
+    "jobType": {
+      "items": [
+        {
+          "name": "销售业务"
+        }
+      ]
+    },
+    "feedbackRation": 0.95,
+    "workingExp": {
+      "name": "3-5年"
+    },
+    "industry": "121100,170500",
+    "emplType": "全职",
+    "applyType": "1",
+    "saleType": false,
+    "positionURL": "https://jobs.zhaopin.com/CC361343813J00257246209.htm",
+    "companyLogo": "https://storage-public.zhaopin.cn/user/avatar/1589587496559643317/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20200316081552.jpg",
+    "tags": [],
+    "expandCount": 0,
+    "score": "278",
+    "vipLevel": 1002,
+    "positionLabel": "{\"chatWindow\":null,\"refreshLevel\":2,\"skillLabel\":[{\"state\":0,\"value\":\"CET4\"},{\"state\":0,\"value\":\"外贸销售\"},{\"state\":0,\"value\":\"服装贸易\"}]}",
+    "bestEmployerLabel": [],
+    "welfare": [
+      "五险一金",
+      "包住",
+      "带薪年假",
+      "健身俱乐部",
+      "项目奖金"
+    ],
+    "businessArea": "",
+    "futureJob": false,
+    "futureJobUrl": "",
+    "tagIntHighend": 0,
+    "rootOrgId": 36134381,
+    "staffId": 133191946,
+    "isChatWindow": 1,
+    "staff": {
+      "avatar": "https://storage-public.zhaopin.cn/user/avatar/1583854325784781407/95c3235d-b536-4c01-9e73-b727d33086d5.jpg",
+      "department": "",
+      "hrJob": "经理",
+      "hrOnlineIocState": 0,
+      "hrOnlineState": "刚刚活跃",
+      "hrResumeOperationState": "",
+      "id": 133191946,
+      "nickName": "",
+      "passportName": "***",
+      "staffName": "张鹏",
+      "state": 0
+    },
+    "batchDeliveryType": 1,
+    "index": 1,
+    "gWeight": "",
+    "uuid": "CC361343813J00257246209-1596451792253",
+    "selected": false,
+    "applied": false,
+    "collected": false,
+    "isShow": false,
+    "timeState": "最新",
+    "rate": "95%"
+  },
+  {
+    "number": "CC605762330J00268249613",
+    "jobName": "市场销售专员",
+    "company": {
+      "name": "鞍山万正裕盈网络科技有限公司",
+      "number": "CZ605762330",
+      "type": {
+        "name": "民营"
+      },
+      "size": {
+        "name": "20-99人"
+      },
+      "url": "https://company.zhaopin.com/CZ605762330.htm"
+    },
+    "city": {
+      "items": [
+        {
+          "name": "鞍山",
+          "code": "601"
+        }
+      ],
+      "display": "鞍山"
+    },
+    "updateDate": "2020-08-03 00:51:59",
+    "salary": "6K-8K",
+    "distance": 0,
+    "eduLevel": {
+      "name": "初中及以下"
+    },
+    "jobType": {
+      "items": [
+        {
+          "name": "销售业务"
+        }
+      ]
+    },
+    "feedbackRation": 0.93,
+    "workingExp": {
+      "name": "不限"
+    },
+    "industry": "160400",
+    "emplType": "全职",
+    "applyType": "1",
+    "saleType": false,
+    "positionURL": "https://jobs.zhaopin.com/CC605762330J00268249613.htm",
+    "companyLogo": "http://img09.zhaopin.com/2012/other/mobile/mi/companyLogo/03/default.png",
+    "tags": [],
+    "expandCount": 0,
+    "score": "278",
+    "vipLevel": 1002,
+    "positionLabel": "{\"chatWindow\":null,\"refreshLevel\":2,\"skillLabel\":[{\"state\":0,\"value\":\"地推销售\"},{\"state\":0,\"value\":\"市场营销\"},{\"state\":0,\"value\":\"面销\"},{\"state\":0,\"value\":\"网销\"}]}",
+    "bestEmployerLabel": [],
+    "welfare": [
+      "五险一金",
+      "绩效奖金",
+      "弹性工作",
+      "通讯补助",
+      "补充医疗保险"
+    ],
+    "businessArea": "",
+    "futureJob": false,
+    "futureJobUrl": "",
+    "tagIntHighend": 0,
+    "rootOrgId": 60576233,
+    "staffId": 1029970511,
+    "isChatWindow": 1,
+    "staff": {
+      "avatar": "https://storage-public.zhaopin.cn/user/avatar/1583927246307005650/757a7c42-c1c7-49b8-b0fb-79342bf358da.jpg",
+      "department": "",
+      "hrJob": "总经理",
+      "hrOnlineIocState": 0,
+      "hrOnlineState": "刚刚活跃",
+      "hrResumeOperationState": "",
+      "id": 1029970511,
+      "nickName": "",
+      "passportName": "***",
+      "staffName": "李先生",
+      "state": 0
+    },
+    "batchDeliveryType": 1,
+    "index": 2,
+    "gWeight": "",
+    "uuid": "CC605762330J00268249613-1596451792253",
+    "selected": false,
+    "applied": false,
+    "collected": false,
+    "isShow": false,
+    "timeState": "最新",
+    "rate": "93%"
+  },
+  {
+    "number": "CZ262638280J00047303712",
+    "jobName": "组装装配",
+    "company": {
+      "name": "辽宁希思腾科信息技术有限公司",
+      "number": "CZ262638280",
+      "type": {
+        "name": "不限"
+      },
+      "size": {
+        "name": "20-99人"
+      },
+      "url": "https://company.zhaopin.com/CZ262638280.htm"
+    },
+    "city": {
+      "items": [
+        {
+          "name": "鞍山",
+          "code": "601"
+        }
+      ],
+      "display": "鞍山"
+    },
+    "updateDate": "2020-08-03 00:51:53",
+    "salary": "2K-3K",
+    "distance": 0,
+    "eduLevel": {
+      "name": "中专/中技"
+    },
+    "jobType": {
+      "items": [
+        {
+          "name": "技工/操作工"
+        }
+      ]
+    },
+    "feedbackRation": 0.88,
+    "workingExp": {
+      "name": "1-3年"
+    },
+    "industry": "160400",
+    "emplType": "全职",
+    "applyType": "1",
+    "saleType": false,
+    "positionURL": "https://jobs.zhaopin.com/CZ262638280J00047303712.htm",
+    "companyLogo": "https://fileihr.zhaopin.com/026/263/026263828/logo/e82b6e2f-8b80-4bda-b307-8ea48e990985.png",
+    "tags": [],
+    "expandCount": 0,
+    "score": "275",
+    "vipLevel": 1002,
+    "positionLabel": "{\"chatWindow\":null,\"refreshLevel\":2,\"skillLabel\":[{\"state\":0,\"value\":\"弱电焊接\"},{\"state\":0,\"value\":\"吃苦耐劳\"},{\"state\":0,\"value\":\"动手能力强\"}]}",
+    "bestEmployerLabel": [],
+    "welfare": [
+      "周末双休",
+      "五险一金",
+      "餐补",
+      "免费班车",
+      "带薪年假"
+    ],
+    "businessArea": "",
+    "futureJob": false,
+    "futureJobUrl": "",
+    "tagIntHighend": 0,
+    "rootOrgId": 26263828,
+    "staffId": 1001603642,
+    "isChatWindow": 1,
+    "staff": {
+      "avatar": "https://rd5-public.zhaopin.cn/imgs/avatar_m3.png",
+      "department": "",
+      "hrJob": "人资企管部经理",
+      "hrOnlineIocState": 0,
+      "hrOnlineState": "今日活跃",
+      "hrResumeOperationState": "",
+      "id": 1001603642,
+      "nickName": "",
+      "passportName": "***",
+      "staffName": "冯先生",
+      "state": 0
+    },
+    "batchDeliveryType": 1,
+    "index": 3,
+    "gWeight": "",
+    "uuid": "CZ262638280J00047303712-1596451792253",
+    "selected": false,
+    "applied": false,
+    "collected": false,
+    "isShow": false,
+    "timeState": "最新",
+    "rate": "88%"
+  },
+  {
+    "number": "CC262638281J00216984312",
+    "jobName": "结构工程师/机械工程师",
+    "company": {
+      "name": "辽宁希思腾科信息技术有限公司",
+      "number": "CZ262638280",
+      "type": {
+        "name": "不限"
+      },
+      "size": {
+        "name": "20-99人"
+      },
+      "url": "https://company.zhaopin.com/CZ262638280.htm"
+    },
+    "city": {
+      "items": [
+        {
+          "name": "鞍山",
+          "code": "601"
+        }
+      ],
+      "display": "鞍山"
+    },
+    "updateDate": "2020-08-03 00:51:53",
+    "salary": "4K-6K",
+    "distance": 0,
+    "eduLevel": {
+      "name": "本科"
+    },
+    "jobType": {
+      "items": [
+        {
+          "name": "客服/售前/售后技术支持"
+        }
+      ]
+    },
+    "feedbackRation": 0.82,
+    "workingExp": {
+      "name": "3-5年"
+    },
+    "industry": "160400",
+    "emplType": "全职",
+    "applyType": "1",
+    "saleType": false,
+    "positionURL": "https://jobs.zhaopin.com/CC262638281J00216984312.htm",
+    "companyLogo": "https://fileihr.zhaopin.com/026/263/026263828/logo/e82b6e2f-8b80-4bda-b307-8ea48e990985.png",
+    "tags": [],
+    "expandCount": 0,
+    "score": "273",
+    "vipLevel": 1002,
+    "positionLabel": "{\"chatWindow\":null,\"refreshLevel\":2,\"skillLabel\":[{\"state\":0,\"value\":\"工业设计\"}]}",
+    "bestEmployerLabel": [],
+    "welfare": [
+      "五险一金",
+      "加班补助",
+      "交通补助",
+      "餐补",
+      "带薪年假"
+    ],
+    "businessArea": "",
+    "futureJob": false,
+    "futureJobUrl": "",
+    "tagIntHighend": 0,
+    "rootOrgId": 26263828,
+    "staffId": 1001603642,
+    "isChatWindow": 1,
+    "staff": {
+      "avatar": "https://rd5-public.zhaopin.cn/imgs/avatar_m3.png",
+      "department": "",
+      "hrJob": "人资企管部经理",
+      "hrOnlineIocState": 0,
+      "hrOnlineState": "今日活跃",
+      "hrResumeOperationState": "",
+      "id": 1001603642,
+      "nickName": "",
+      "passportName": "***",
+      "staffName": "冯先生",
+      "state": 0
+    },
+    "batchDeliveryType": 1,
+    "index": 4,
+    "gWeight": "",
+    "uuid": "CC262638281J00216984312-1596451792253",
+    "selected": false,
+    "applied": false,
+    "collected": false,
+    "isShow": false,
+    "timeState": "最新",
+    "rate": "82%"
+  },
+  {
+    "number": "CC380577589J00405435007",
+    "jobName": "总裁司机",
+    "company": {
+      "name": "鞍山金地置业开发有限公司",
+      "number": "CZ380577580",
+      "type": {
+        "name": "民营"
+      },
+      "size": {
+        "name": "20-99人"
+      },
+      "url": "https://company.zhaopin.com/CZ380577580.htm"
+    },
+    "city": {
+      "items": [
+        {
+          "name": "鞍山",
+          "code": "601"
+        }
+      ],
+      "display": "鞍山"
+    },
+    "updateDate": "2020-08-03 00:50:34",
+    "salary": "2K-4K",
+    "distance": 0,
+    "eduLevel": {
+      "name": "中专/中技"
+    },
+    "jobType": {
+      "items": [
+        {
+          "name": "交通运输服务"
+        }
+      ]
+    },
+    "feedbackRation": 0.71,
+    "workingExp": {
+      "name": "5-10年"
+    },
+    "industry": "140000",
+    "emplType": "全职",
+    "applyType": "1",
+    "saleType": false,
+    "positionURL": "https://jobs.zhaopin.com/CC380577589J00405435007.htm",
+    "companyLogo": "http://img09.zhaopin.com/2012/other/mobile/mi/companyLogo/03/default.png",
+    "tags": [],
+    "expandCount": 0,
+    "score": "272",
+    "vipLevel": 1002,
+    "positionLabel": "{\"chatWindow\":null,\"refreshLevel\":2,\"skillLabel\":[{\"state\":0,\"value\":\"C1\"}]}",
+    "bestEmployerLabel": [],
+    "welfare": [
+      "年终分红",
+      "包吃",
+      "免费停车",
+      "节日福利"
+    ],
+    "businessArea": "",
+    "futureJob": false,
+    "futureJobUrl": "",
+    "tagIntHighend": 0,
+    "rootOrgId": 38057758,
+    "staffId": 1039754895,
+    "isChatWindow": 1,
+    "staff": {
+      "avatar": "https://rd5-public.zhaopin.cn/imgs/avatar_f2.png",
+      "department": "",
+      "hrJob": "文员",
+      "hrOnlineIocState": 0,
+      "hrOnlineState": "刚刚活跃",
+      "hrResumeOperationState": "",
+      "id": 1039754895,
+      "nickName": "",
+      "passportName": "***",
+      "staffName": "芦媛",
+      "state": 0
+    },
+    "batchDeliveryType": 1,
+    "index": 5,
+    "gWeight": "",
+    "uuid": "CC380577589J00405435007-1596451792253",
+    "selected": false,
+    "applied": false,
+    "collected": false,
+    "isShow": false,
+    "timeState": "最新",
+    "rate": "71%"
+  }
+]

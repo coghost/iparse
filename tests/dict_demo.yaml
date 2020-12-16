@@ -1,0 +1,25 @@
+__raw:
+  site_url: ''
+
+maps_data:
+  destination:
+    _locator: destination_addresses
+  rows:
+    _locator: rows
+    elements:
+      _locator: elements
+      status: status
+      distance: distance.text
+      duration: duration.text
+
+glossary:
+  _locator: glossary
+  title: title
+  gloss_title: GlossDiv.title
+  gloss_entry:
+    _locator: GlossDiv.GlossList.GlossEntry
+    gid: ID
+    sort_as: SortAs
+    abbrev: Abbrev
+    def_para: GlossDef.para
+    see_also: GlossDef.GlossSeeAlso

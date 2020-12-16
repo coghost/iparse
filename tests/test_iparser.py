@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-__date__ = '12/09 23:07'
-__description__ = '''
-https://xkcd.com/353/
-'''
+__description__ = ''' https://xkcd.com/353/ '''
 
-from pathlib import PurePath
-from iparse._parse import IParser, RsvWords
+from pathlib import Path
+from iparse import IParser
 
-HOME_DIR = PurePath(__file__).parents[1]
+HOME_DIR = Path(__file__).parents[1]
 
 
 class XkcdParser(IParser):

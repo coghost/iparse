@@ -1,0 +1,161 @@
+__RF: &RF
+  _attr_refine: true
+
+__STRIP: &STRIP
+  _striped: true
+
+__STRIP_DOUBLE_QUATATION_MARK: &STRIP_DQM
+  _striped: '"'
+
+__STRIP_COLON: &STRIP_COLON
+  _striped: ':'
+
+__ENURL: &ENRICH_URL
+  _attr: href
+  _attr_refine: enrich_url
+
+__EN_URL_TXT: &ENRICH_URL_TXT
+  link_page:
+    <<: *ENRICH_URL
+  link_text: ~
+
+__EN_DOT_K: &DOT_K
+  _attr_refine: enrich_dot_k
+
+__EN_DOT_K_INT: &DOT_K_INT
+  _attr_refine: enrich_dot_k_int
+
+__ALL_ELEMS: &ALL_ELEMS
+  _index: ~
+
+__raw:
+  site_url: https://in.linkedin.com/
+  # test_keys:
+  # - experience
+#    - education
+
+page:
+  title: html>head>title
+  people: div.search-bar__full-placeholder
+
+peopleRelated:
+  browsemap:
+    _locator: section.browsemap
+    people: &PEOPLE
+      <<: *ALL_ELEMS
+      _locator: li.result-card
+      card:
+        _locator: &ALINK a[class$=link]
+        <<: *ENRICH_URL_TXT
+      subtitle: &SUB_TITLE
+        _locator: h4[class$=subtitle]
+  samename:
+    _locator: section.samename
+    people:
+      <<: *PEOPLE
+      location: p[class*=location]
+  similar:
+    _locator: section.similar-profiles
+    people:
+      <<: *PEOPLE
+
+recommendations:
+  _locator: section.recommendations
+  header:
+    heading: h2[class*=heading]
+    subheading:
+      <<: *STRIP_COLON
+      _locator: p[class*=subheading]
+  details:
+    <<: *ALL_ELEMS
+    _locator: blockquote
+  recommendations:
+    _attr_refine: true
+    _locator: span.recommendations__count
+
+activities:
+  <<: *ALL_ELEMS
+  _locator: section.activities
+  header: header>h2
+  posts:
+    <<: *ALL_ELEMS
+    _locator: div.activity-card
+    link:
+      _attr: href
+      _locator: a
+    author:
+      _locator: p>a
+      <<: *ENRICH_URL_TXT
+    pub_date:
+      _locator: p>span
+
+experience:
+  _locator: section.experience
+  positions: &POSITION
+    <<: *ALL_ELEMS
+    _locator: ul.experience__list>li.result-card
+    status:
+      _attr: data-section
+      _attr_refine: _refine_status_data_section
+    company:
+      _locator: *ALINK
+      link:
+        _attr: href
+      name:
+        _attr: alt
+        _locator: img
+    experience:
+      _locator: div[class*=experience]
+      title: &TITLE h3[class$=title]
+      subtitle:
+        _locator: a[class$=subtitle-link]
+      duration: &CPX_DUR
+        _striped: true
+        _joiner: ','
+        _attr_refine: _refine_exp_duration
+        _locator: span.date-range
+      location: p[class*=location]
+      description:
+        _joiner: '|'
+        _locator: div[class*=description]>p
+  expGroup:
+    _locator: li.experience-group
+    company: h4[class$=company]
+    duration: p[class$=duration]
+    positions:
+      <<: *ALL_ELEMS
+      <<: *POSITION
+      _locator: li.result-card
+
+education:
+  <<: *ALL_ELEMS
+  _locator: section.education>ul>li
+  school:
+    _locator: *ALINK
+    <<: *ENRICH_URL_TXT
+  duration:
+    <<: *CPX_DUR
+  title: *TITLE
+  subtitle:
+    <<: *SUB_TITLE
+  details:
+    _striped: true
+    _locator: div[data-section=educations]
+
+volunteering:
+  <<: *ALL_ELEMS
+  _locator: section.volunteering>ul>li
+  company:
+    _locator: *ALINK
+    <<: *ENRICH_URL_TXT
+  detail:
+    _locator: div[class$=contents]
+    title: *TITLE
+    subtitle:
+      <<: *SUB_TITLE
+  duration:
+    <<: *CPX_DUR
+  cause:
+    _locator: p[class$=cause]
+  description:
+    _locator: div[class*=description]>p
