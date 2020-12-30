@@ -121,6 +121,7 @@ class IParser(object):
         self.basic_yaml = kwargs.get('basic_yaml', '')
         # site yaml file is where all site's selector behold
         self.startup_yaml = kwargs.get('startup_yaml', self.snake_site_name)
+        self.startup_yaml_config = kwargs.get('startup_yaml_config')
         # if is_test_mode, will raise exceptions instead of log
         self.is_test_mode = kwargs.get('is_test_mode', False)
         self.test_keys = kwargs.get('test_keys', [])
@@ -174,7 +175,10 @@ class IParser(object):
             file_name (str): using which file as startup yaml
 
         """
-        _custom = self._load_yaml_config(file_name)
+        if self.startup_yaml_config:
+            _custom = self.startup_yaml_config
+        else:
+            _custom = self._load_yaml_config(file_name)
         for _key in _custom.keys():
             if isinstance(_custom[_key], dict):
                 self.mapper[_key] = dict(self.mapper.get(_key, {}), **_custom.get(_key, {}))
