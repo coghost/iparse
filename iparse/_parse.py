@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 from urllib.parse import urlparse, urljoin
 import string
+import subprocess
 
 import yaml
 import logzero
@@ -235,6 +236,28 @@ class IParser(object):
             return yaml_dump(dat)
         return yaml_loader(dat, raw_data=True)
 
+    @staticmethod
+    def copy_to_clipboard(dat):
+        p = subprocess.Popen(['pbcopy'], stdin=subprocess.PIPE)
+        dat = dat.encode() if hasattr(dat, 'encode') else dat
+        p.stdin.write(dat)
+        p.stdin.close()
+        p.communicate()
+
+    def copy_data(self, dat=None, use_json=True, **kwargs):
+        """copy any data you want to clipboard
+
+        Args:
+            dat: especially for dict
+            use_json: default true
+            kwargs: all json dumps supported
+        """
+        data = dat or self._data
+        if use_json:
+            data = json.dumps(data, **kwargs)
+        self.copy_to_clipboard(data)
+        return data
+
     def do_parse(self):
         for dom_key, dom_config in self.mapper.items():
             if dom_key.startswith('__'):
@@ -358,8 +381,23 @@ class IParser(object):
             else:
                 zlog.exception(e)
 
-    def select_soup_node_elems(self, node, key, multiple=True):
-        elems = getattr(node, 'select')(key)
+    def _handle_soup_key(self, key):
+        if not isinstance(key, str) and not isinstance(key, list):
+            raise Exception(f"_locator {key} type only supported: [list, str]")
+        if isinstance(key, str):
+            key = [key]
+        return key
+
+    def _get_single_node_value(self, node, locator):
+        return getattr(node, 'select')(locator)
+
+    def select_soup_node_elems(self, node, locator, multiple=True):
+        locators = self._handle_soup_key(locator)
+        elems = []
+        for _loc in locators:
+            # WARN: how we combine results here is different from JsonParser's value
+            elems += self._get_single_node_value(node, _loc)
+
         if multiple:
             return elems
         return elems[0] if elems else elems
@@ -698,7 +736,7 @@ class IJsonParser(IParser):
         # T2: list
         self.soup = [x for x in self.soup if x]
 
-    def select_soup_node_elems(self, root, locator, multiple=True):
+    def select_soup_node_elems(self, root, locator, multiple=False):
         """
         in case some file's keys goes with `self.cascade_sep`, so we need go through the whole locator
         e.g.:
@@ -711,6 +749,20 @@ class IJsonParser(IParser):
             3. A.get(features).get(/job_category).get(values)
             4. ...
         """
+        locators = self._handle_soup_key(locator)
+
+        elems = []
+        for _loc in locators:
+            v = self._select_json_sub_node(root, _loc)
+            if v is not None and v != '':
+                # other false value are all accepted
+                elems.append(v)
+
+        if multiple:
+            return elems
+        return elems[0] if elems else ''
+
+    def _select_json_sub_node(self, root, locator):
         # locator exists, that's it
         if locator in root:
             return root.get(locator, '')
