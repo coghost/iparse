@@ -19,6 +19,15 @@ page:
     _locator: div#licenseText
     _joiner: ' '
     _striped: true
+  by_multiple_locators:
+    _index:
+      - 1
+      - 2
+    _locator:
+      - a[href="/archive"]
+      - head>title>span
+      - head>title
+      - a[href="/about"]
 
 top_container:
   _locator: div#topContainer
