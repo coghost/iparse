@@ -131,6 +131,7 @@ class IParser(object):
         self.features = kwargs.get('features', 'lxml')
         self.reserved_yaml_keys = kwargs.get('reserved_yaml_keys', [])
         self.elems_default_index = kwargs.get('elems_default_index', 0)
+        self.selected_keys = kwargs.get('selected_keys', [])
 
         # where our parsed data behold
         self._data = {}
@@ -273,6 +274,10 @@ class IParser(object):
 
             if all([self.is_test_mode, self.test_keys, dom_key not in self.test_keys]):
                 zlog.debug('[SKIPPED-KEYS] ({})'.format(dom_key))
+                continue
+
+            if all([self.selected_keys, dom_key not in self.selected_keys]):
+                zlog.info(f"[SKIPPED-KEYS] ({dom_key})")
                 continue
 
             self._parse_dom(dom_key, dom_config, self.soup, self._data)
